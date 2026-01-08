@@ -10,13 +10,13 @@ export default function VideoEmbed({
 }: {
   videoType: "youtube" | "vimeo" | "direct" | "iframe" | "gdrive";
   url: string;
-  variant: "long" | "short";
+  variant?: "long" | "short";
 }) {
   // Aspect ratio:
   // long  → 16:9
   // short → 9:16
-  const aspectClass =
-    variant === "long" ? "aspect-video" : "aspect-[9/16]";
+  const v = variant ?? "short";
+  const aspectClass = v === "long" ? "aspect-video" : "aspect-[9/16]";
 
   if (videoType === "iframe") {
     return (
@@ -47,13 +47,7 @@ export default function VideoEmbed({
 
   return (
     <div className={`${aspectClass} w-full overflow-hidden rounded-2xl bg-black shadow-soft`}>
-      <ReactPlayer
-        url={url}
-        width="100%"
-        height="100%"
-        controls
-        playsinline
-      />
+      <ReactPlayer url={url} width="100%" height="100%" controls playsinline />
     </div>
   );
 }
